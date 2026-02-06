@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hallo!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: wave 1s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+
+        p {
+            color: #555;
+            font-size: 1.3em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .emoji {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+
+        .response {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            font-size: 1.2em;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .time {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👋 Hallo!</h1>
+
+        <div class="response">
+            <p><strong>Mir geht es großartig, danke der Nachfrage!</strong></p>
+            <div class="emoji">😊</div>
+            <p>Ich bin bereit, dir zu helfen. Wie kann ich dir heute weiterhelfen?</p>
+        </div>
+
+        <p style="margin-top: 30px;">Ich bin ein freundlicher Assistent und freue mich, mit dir zu sprechen!</p>
+
+        <button onclick="changeResponse()">Neue Antwort</button>
+
+        <div class="time" id="time"></div>
+    </div>
+
+    <script>
+        // Display current time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('de-DE', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            const dateString = now.toLocaleDateString('de-DE', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('time').textContent = `${dateString}, ${timeString}`;
+        }
+
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Random responses
+        const responses = [
+            { text: "Mir geht es großartig, danke der Nachfrage!", emoji: "😊", sub: "Ich bin bereit, dir zu helfen. Wie kann ich dir heute weiterhelfen?" },
+            { text: "Super! Vielen Dank, dass du fragst!", emoji: "🎉", sub: "Ich hoffe, dir geht es auch gut!" },
+            { text: "Fantastisch! Ich bin voller Energie!", emoji: "⚡", sub: "Was kann ich heute für dich tun?" },
+            { text: "Sehr gut, danke! Schön, dich zu sehen!", emoji: "🌟", sub: "Wie kann ich dir helfen?" },
+            { text: "Mir geht es wunderbar!", emoji: "🌈", sub: "Lass uns zusammenarbeiten!" }
+        ];
+
+        function changeResponse() {
+            const response = responses[Math.floor(Math.random() * responses.length)];
+            const responseDiv = document.querySelector('.response');
+
+            responseDiv.style.opacity = '0';
+            responseDiv.style.transform = 'scale(0.9)';
+            responseDiv.style.transition = 'all 0.3s ease';
+
+            setTimeout(() => {
+                responseDiv.innerHTML = `
+                    <p><strong>${response.text}</strong></p>
+                    <div class="emoji">${response.emoji}</div>
+                    <p>${response.sub}</p>
+                `;
+                responseDiv.style.opacity = '1';
+                responseDiv.style.transform = 'scale(1)';
+            }, 300);
+        }
+    </script>
+</body>
+</html>
